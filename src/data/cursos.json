@@ -7,15 +7,30 @@
             "inscritos": 30,
             "tiempo": 5,
             "nivel": "basico"
+        },
+        {
+            "id": 2,
+            "tema": "Fundamentos de SQL",
+            "tecnologia": "Postgresql",
+            "inscritos": 40,
+            "tiempo": 6,
+            "nivel": "basico"
         }
     ],
     "ingles": [
         {
             "id": 1,
             "tema": "Introduccion al idioma ingles",
-            "inscriptos": 43,
+            "inscritos": 43,
             "tiempo": 6,
             "nivel": "A1"
+        },
+        {
+            "id": 2,
+            "tema": "Ingles en la vida diaria",
+            "inscritos": 31,
+            "tiempo": 6,
+            "nivel": "A2"
         }
     ],
     "matematica": [

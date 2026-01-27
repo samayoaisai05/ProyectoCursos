@@ -6,18 +6,64 @@ const fs = require('fs')
 const fileCursos = path.join(__dirname, '../data/cursos.json')
 
 // funcion reutilizable de leer el archivo
-const leerCursos = () => {
-    const data = fs.readFileSync(fileCursos, 'utf-8')
-    return JSON.parse(data)
+const leerCursos = async () => {
+    try{
+        const data = await fs.promises.readFile(fileCursos, 'utf-8')
+        return JSON.parse(data)
+    } catch (error){
+        throw new Error('Error al leer el archivo')
+    }
+    
 }
 
-// listar todos los cursos
-router.get('/', (req, res) => {
+const escribirCurso = async (data) => {
+    if(typeof data !== 'object' || data === null){
+        throw new Error('Tipos de datos invalidos')
+    }
+
     try{
-        const cursos = leerCursos()
+        await fs.promises.writeFile(
+            fileCursos, JSON.stringify(data, null, 4), 'utf-8' // cuando utilizamos async es necesario utilizar fs.promises
+        )
+    } catch (error){
+        throw new Error('Error al escribir el archivo de curso')
+    }
+}
+
+// metodo para listar todos los cursos
+router.get('/', async (req, res) => {
+    try{
+        const cursos = await leerCursos()
         res.json(cursos)
     } catch (err){
         return res.status(500).json({error: 'Error al leer los cursos'})
+    }
+})
+
+// metodo para crear un nuevo curso
+router.post('/:area', async (req, res) => {
+    const area = String(req.params.area)
+    const nuevoCurso = req.body
+
+    try{
+        const cursos = await leerCursos()
+
+        // crear validaciones para los datos ingresados en el body y params
+        if(!cursos[area]){
+            return res.status(404).json({error: 'Area no encontrada'})
+        }
+
+        cursos[area].push(nuevoCurso)
+        await escribirCurso(cursos)
+        return res.status(201).json({
+            message: 'Curso creado exitosamente',
+            curso: nuevoCurso
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            error: 'Error en el servidor'
+        })
     }
 })
 
