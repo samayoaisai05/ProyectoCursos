@@ -1,0 +1,31 @@
+{
+    "programacion": [
+        {
+            "id": 1,
+            "tema": "Fundamentos de programacion",
+            "tecnologia": "PSInt",
+            "inscritos": 30,
+            "tiempo": 5,
+            "nivel": "basico"
+        }
+    ],
+    "ingles": [
+        {
+            "id": 1,
+            "tema": "Introduccion al idioma ingles",
+            "inscriptos": 43,
+            "tiempo": 6,
+            "nivel": "A1"
+        }
+    ],
+    "matematica": [
+        {
+            "id": 1,
+            "titulo": "Fundamentos de matematicas",
+            "tema": "Calculo I",
+            "inscritos": 26,
+            "tiempo": 4,
+            "nivel": "basico"
+        }
+    ]
+}
