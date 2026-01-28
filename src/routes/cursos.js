@@ -22,8 +22,8 @@ const escribirCurso = async (data) => {
     }
 
     try{
-        await fs.promises.writeFile(
-            fileCursos, JSON.stringify(data, null, 4), 'utf-8' // cuando utilizamos async es necesario utilizar fs.promises
+        await fs.promises.writeFile( // cuando utilizamos async es necesario utilizar fs.promises
+            fileCursos, JSON.stringify(data, null, 4), 'utf-8' 
         )
     } catch (error){
         throw new Error('Error al escribir el archivo de curso')
@@ -67,6 +67,60 @@ router.post('/:area', async (req, res) => {
     }
 })
 
+// metodo para actualizar un curso
+router.put('/:area/:id', async (req, res) => {
+    const area = String(req.params.area)
+    const idCurso = parseInt(req.params.id)
+    const updateCurso = req.body
+
+    try{
+        const cursos = await leerCursos()
+
+        if(!cursos[area]){
+            return res.status(404).json({
+                error: 'No se encontró esa area'
+            })
+        }
+        
+        cursos[area] = cursos[area].map(
+            curso => curso.id === idCurso ? {...curso, ...updateCurso} : curso
+        )
+
+        await escribirCurso(cursos)
+        return res.status(200).json({
+            message: 'Curso actualizado exitosamente'
+        })
+
+    } catch (error){
+        console.log(error)
+        return res.status(500).json({
+            error: 'Error en le servidor'
+        })
+    }
+})
+
+
+router.delete('/:area/:id', async (req, res) => {
+    const area = String(req.params.area)
+    const idCurso = parseInt(req.params.id)
+
+    try{
+        const cursos = await leerCursos()
+
+        cursos[area] = cursos[area].filter(curso => curso.id !== idCurso)
+
+        await escribirCurso(cursos)
+        return res.status(200).json({
+            message: 'Curso eliminado con exito'
+        })
+
+    } catch(error) {
+        console.log(error)
+        return res.status(500).json({
+            error: 'Error en el servidor'
+        })
+    }
+})
 
 
 module.exports = router

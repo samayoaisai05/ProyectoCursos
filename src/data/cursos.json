@@ -7,14 +7,6 @@
             "inscritos": 30,
             "tiempo": 5,
             "nivel": "basico"
-        },
-        {
-            "id": 2,
-            "tema": "Fundamentos de SQL",
-            "tecnologia": "Postgresql",
-            "inscritos": 40,
-            "tiempo": 6,
-            "nivel": "basico"
         }
     ],
     "ingles": [
@@ -40,6 +32,14 @@
             "tema": "Calculo I",
             "inscritos": 26,
             "tiempo": 4,
+            "nivel": "basico"
+        },
+        {
+            "id": 2,
+            "titulo": "Principios de Algebra lineal",
+            "tema": "Calculo II",
+            "inscritos": 25,
+            "tiempo": 6,
             "nivel": "basico"
         }
     ]
