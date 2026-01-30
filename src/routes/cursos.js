@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 const fs = require('fs')
+const { validProgramacion } = require('../utils/validaciones') 
 
 const fileCursos = path.join(__dirname, '../data/cursos.json')
 
@@ -13,7 +14,6 @@ const leerCursos = async () => {
     } catch (error){
         throw new Error('Error al leer el archivo')
     }
-    
 }
 
 const escribirCurso = async (data) => {
@@ -51,6 +51,11 @@ router.post('/:area', async (req, res) => {
         // crear validaciones para los datos ingresados en el body y params
         if(!cursos[area]){
             return res.status(404).json({error: 'Area no encontrada'})
+        }
+
+        const validaciones = validProgramacion(nuevoCurso, cursos[area], 'POST')
+        if(!validaciones.isValid){
+            return res.status(400).json({error: validaciones.error})
         }
 
         cursos[area].push(nuevoCurso)
