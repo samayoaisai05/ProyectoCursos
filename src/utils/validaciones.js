@@ -34,18 +34,31 @@ function validNivel(nivel){
     if(typeof nivel === 'string'){
         return listaNiveles.includes(nivel.toLocaleLowerCase())
     }
+    return false
+}
+
+function validIdioma(idioma){
+    const listaIdiomas = ['ingles', 'frances', 'mandarin', 'japones']
+
+    if(typeof idioma === 'string'){
+        return listaIdiomas.includes(idioma.toLocaleLowerCase())
+    }
 
     return false
 }
-// validaciones para area programacion
 
+function validTema(tema){
+     return typeof tema === 'string' && tema.length >= 5
+}
+
+// validaciones para area programacion
 function validProgramacion(curso, cursosArea, metodo){
     const {id, titulo, tecnologia, inscritos, tiempo, nivel} = curso
 
     if(!validId(id, cursosArea, metodo)){
         return {
             isValid: false,
-            error: 'El id ya existe'
+            error: 'Problemas con el Id'
         }
     }
 
@@ -88,13 +101,106 @@ function validProgramacion(curso, cursosArea, metodo){
 }
 
 // validacioes para idiomas
+function validIdiomas(curso, cursosArea, metodo){
+    const {id, titulo, idioma, inscritos, tiempo, nivel} = curso
 
+    if(!validId(id, cursosArea, metodo)){
+        return {
+            isValid: false,
+            error: 'Problemas con el Id'
+        }
+    }
 
+    if(!validTitulo(titulo)){
+        return {
+            isValid: false,
+            error: 'Problemas en el titulo'
+        }
+    }
+
+    if(!validIdioma(idioma)){
+        return {
+            isValid: false,
+            error: 'Problemas con el idioma'
+        }
+    }
+
+    if(!validInscritos(inscritos)){
+        return {
+            isValid: false,
+            error: 'Problemas con la cantidad de inscritos'
+        }
+    }
+
+    if(!validTiempo(tiempo)){
+        return {
+            isValid: false,
+            error: 'Problemas en el tiempo'
+        }
+    }
+
+    if(!validNivel(nivel)){
+        return {
+            isValid: false,
+            error: 'Problemas en el nivel'
+        }
+    }
+
+    return { isValid: true}
+}
 
 // validaciones para matematicas
+function validMatematicas(curso, cursosArea, metodo){
+    const {id, titulo, tema, inscritos, tiempo, nivel} = curso
 
+    if(!validId(id, cursosArea, metodo)){
+        return {
+            isValid: false,
+            error: 'Problemas con el Id'
+        }
+    }
+
+    if(!validTitulo(titulo)){
+        return {
+            isValid: false,
+            error: 'El titulo no es acorde'
+        }
+    }
+
+    if(!validTema(tema)){
+        return {
+            isValid: false,
+            error: 'La tecnologia no es acorde'
+        }
+    }
+
+    if(!validInscritos(inscritos)){
+        return {
+            isValid: false,
+            error: 'Error en el campo inscritos'
+        }
+    }
+
+    if(!validTiempo(tiempo)){
+        return {
+            isValid: false,
+            error: 'Error en el tiempo del curso'
+        }
+    }
+
+    if(!validNivel(nivel)){
+        return {
+            isValid: false,
+            error: 'Error en el nivel del curso'
+        }
+    }
+
+    return { isValid: true}
+}
 
 
 module.exports = {
-    validProgramacion
+    validProgramacion,
+    validIdiomas,
+    validMatematicas
 }

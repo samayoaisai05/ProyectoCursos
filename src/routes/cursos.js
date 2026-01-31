@@ -2,7 +2,10 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 const fs = require('fs')
-const { validProgramacion } = require('../utils/validaciones') 
+const { 
+    validProgramacion, 
+    validIdiomas,
+    validMatematicas } = require('../utils/validaciones') 
 
 const fileCursos = path.join(__dirname, '../data/cursos.json')
 
@@ -51,11 +54,21 @@ router.post('/:area', async (req, res) => {
         // crear validaciones para los datos ingresados en el body y params
         if(!cursos[area]){
             return res.status(404).json({error: 'Area no encontrada'})
-        }
-
-        const validaciones = validProgramacion(nuevoCurso, cursos[area], 'POST')
-        if(!validaciones.isValid){
-            return res.status(400).json({error: validaciones.error})
+        } else if(area === 'programacion'){
+            const validaciones = validProgramacion(nuevoCurso, cursos[area], 'POST')
+            if(!validaciones.isValid){
+                return res.status(400).json({error: validaciones.error})
+            }
+        } else if(area === 'idiomas'){
+            const validaciones = validIdiomas(nuevoCurso, cursos[area], 'POST')
+            if(!validaciones.isValid){
+                return res.status(400).json({error: validaciones.error})
+            }
+        } else if(area === 'matematicas'){
+            const validaciones = validMatematicas(nuevoCurso, cursos[area], 'POST')
+            if(!validaciones.isValid){
+                return res.status(400).json({error: validaciones.error})
+            }
         }
 
         cursos[area].push(nuevoCurso)
@@ -80,11 +93,32 @@ router.put('/:area/:id', async (req, res) => {
 
     try{
         const cursos = await leerCursos()
-
+        /*
+        for( i of cursos[area]){
+            if(i.id !== idCurso){
+                return res.status(404).json({error: 'Ese id no existe en la base de datos'})
+            }
+        }
+        */
         if(!cursos[area]){
             return res.status(404).json({
                 error: 'No se encontró esa area'
             })
+        } else if(area === 'programacion'){
+            const validaciones = validProgramacion(updateCurso, cursos[area], 'PUT')
+            if(!validaciones.isValid){
+                return res.status(400).json({error: validaciones.error})
+            }
+        } else if(area === 'idiomas'){
+            const validaciones = validIdiomas(updateCurso, cursos[area], 'PUT')
+            if(!validaciones.isValid){
+                return res.status(400).json({error: validaciones.error})
+            }
+        } else if(area === 'matematicas'){
+            const validaciones = validMatematicas(updateCurso, cursos[area], 'PUT')
+            if(!validaciones.isValid){
+                return res.status(400).json({error: validaciones.error})
+            }
         }
         
         cursos[area] = cursos[area].map(
@@ -99,7 +133,7 @@ router.put('/:area/:id', async (req, res) => {
     } catch (error){
         console.log(error)
         return res.status(500).json({
-            error: 'Error en le servidor'
+            error: error
         })
     }
 })

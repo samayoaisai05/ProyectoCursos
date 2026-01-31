@@ -15,6 +15,14 @@
             "inscritos": 5,
             "tiempo": 6,
             "nivel": "Basico"
+        },
+        {
+            "id": 3,
+            "titulo": "Desarrollo de paginas web",
+            "tecnologia": "javascript",
+            "inscritos": 50,
+            "tiempo": 5,
+            "nivel": "basico"
         }
     ],
     "idiomas": [
@@ -36,7 +44,7 @@
         },
         {
             "id": 3,
-            "tema": "Introduccion al idioma Frances",
+            "titulo": "Introduccion al idioma Frances",
             "idioma": "frances",
             "inscritos": 29,
             "tiempo": 6,
@@ -59,6 +67,14 @@
             "inscritos": 25,
             "tiempo": 6,
             "nivel": "basico"
+        },
+        {
+            "id": 3,
+            "titulo": "Introduccion a Big Data",
+            "tema": "Calculo III",
+            "inscritos": 20,
+            "tiempo": 7,
+            "nivel": "intermedio"
         }
     ]
 }
